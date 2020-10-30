@@ -1,10 +1,19 @@
 # Bug
 
 This repository contains a very simple app that reproduces a bug. Instructions on the reproduction
-are displayed when you start the application. Our objective is to diagnose and fix the bug!
+are displayed when you start the application. Our objective is to diagnose and fix the bug—or at
+least get a good start on it!
 
 You can use any tools you'd like for this task. `console.log`, debuggers, Google—any of that is fair
 game.
+
+Some things to keep in mind when debugging:
+
+* The fix requires only a single line to change.
+* This app is about 60LOC and has a single, vendored dependency, which itself has no other
+  dependencies.
+* It is **not** important that you definitively locate and resolve the issue. Please feel free to
+  slow down and think methodically!
 
 For reference, the directory structure looks like this:
 
