@@ -1,9 +1,9 @@
 # Bug
 
-This repository contains a very simple app that reproduces a bug. Our objective is to discover and
-fix the bug!
+This repository contains a very simple app that reproduces a bug. Instructions on the reproduction
+are displayed when you start the application. Our objective is to diagnose and fix the bug!
 
-You can use any tools you'd like to debug this. `console.log`, debuggers, Google—any of that is fair
+You can use any tools you'd like for this task. `console.log`, debuggers, Google—any of that is fair
 game.
 
 For reference, the directory structure looks like this:
