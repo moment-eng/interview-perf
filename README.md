@@ -1,19 +1,25 @@
-# Bug
+# A perf adventure
 
-This repository contains a very simple app that reproduces a bug. Instructions on the reproduction
-are displayed when you start the application. Our objective is to diagnose and fix the bug—or at
-least get a good start on it!
+This repository contains a very simple app with clear performance targets which it ✨ fails to meet
+✨. Our job is to:
+
+-   _investigate_ possible performance issues,
+-   _fix_ issues that are _straightforward_,
+-   and _develop a plan_ for those that are not.
 
 You can use any tools you'd like for this task. `console.log`, debuggers, Google—any of that is fair
 game.
 
-Some things to keep in mind when debugging:
+## What you can expect
 
-* The fix requires only a single line to change.
-* This app is about 60LOC and has a single, vendored dependency, which itself has no other
-  dependencies.
-* It is **not** important that you definitively locate and resolve the issue. Please feel free to
-  slow down and think methodically!
+-   It is **not** important that we definitively hit the performance target in the allocated time.
+    In fact, it is **most likely that we do not**, and **that is ok.**
+-   There are **many ways** to hit the performance target, or develop a plan that is likely to hit
+    the performance target.
+-   This app is about 60LOC and has a single, vendored dependency, which itself has no other
+    dependencies.
+
+## Source structure
 
 For reference, the directory structure looks like this:
 

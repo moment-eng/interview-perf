@@ -1,5 +1,7 @@
 /*global define:false */
 
+window.keyEvents = [];
+
 // A bunch of things from 0 on a numpad and ö are confused for as backtick
 // this is a simple hack for now that will keep ` safe
 function fixBacktick(value, e) {
@@ -713,6 +715,7 @@ function fixBacktick(value, e) {
          * @returns void
          */
         function _handleKeyEvent(e) {
+            const t1 = performance.now();
 
             // normalize e.which for key events
             // @see http://stackoverflow.com/questions/4285627/javascript-keycode-vs-charcode-utter-confusion
@@ -734,6 +737,10 @@ function fixBacktick(value, e) {
             }
 
             self.handleKey(character, _eventModifiers(e), e);
+
+            if (e.type === "keypress") {
+                window.keyEvents.push({ event: `${e.type} '${character}'`, duration: performance.now() - t1 });
+            }
         }
 
         /**

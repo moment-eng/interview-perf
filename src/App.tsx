@@ -6,41 +6,52 @@ import "./App.css";
 function App() {
     const mt = mousetrap as any;
 
-    const ref = useRef<HTMLDivElement>(null);
+    const durationRef = useRef<HTMLDivElement>(null);
+    const statusRef = useRef<HTMLDivElement>(null);
 
     useEffectOnce(() => {
-        mt.bind("g i", function () {
-            ref.current!.innerText = "inbox";
+        mt.bind("g i", async function () {
+            statusRef.current!.innerText = "Status: in inbox";
+
+            for (let i = 0; i < 1000000000; i++) {
+                // This loop is an example of a perf issue you might encounter. Remove it and see
+                // what happens to perf!
+            }
 
             // bind keys specific to this view
             mt.bind("r", function () {
-                ref.current!.innerText = "inbox: replying to email";
+                statusRef.current!.innerText = "Status: in inbox, replying to email";
             });
         });
         mt.bind("g s", function () {
             mt.unbind("r"); // unbind keys not related to this view
-            ref.current!.innerText = "settings";
+            statusRef.current!.innerText = "Status: on settings page";
         });
         mt.bind("g r", function () {
             mt.unbind("r"); // unbind keys not related to this view
-            ref.current!.innerText = "reporting";
+            statusRef.current!.innerText = "Status: on reporting page";
         });
+
+        document.addEventListener("keyup", last5Events(durationRef));
     });
 
     return (
         <div className="App">
             <header className="App-header">
-                <p>
-                    1. hit "g i" to go to email inbox
-                    <br />
-                    2. hit "r" to reply to email
-                    <br />
-                    3. hit "g s" to go to settings
-                    <br />
-                    3. hit "g r" to go to reporting - doesn't work!
-                    <br />
-                </p>
-                <div ref={ref} />
+                <div className="perf-target">
+                    <strong>Perf target:</strong> keypress events are reliably &lt; 1ms
+                </div>
+                <div className="contents">
+                    Actions to try:
+                    <ul>
+                        <li>"g i" to go to email inbox</li>
+                        <li>"r" to reply to email (while in inbox)</li>
+                        <li>"g s" to go to settings</li>
+                        <li>"g r" to go to reporting</li>
+                    </ul>
+                    <div ref={statusRef}>Status: no keys pressed yet</div>
+                    <div ref={durationRef} className="perf-report" />
+                </div>
             </header>
         </div>
     );
@@ -59,6 +70,22 @@ export function useEffectOnce(effect: React.EffectCallback): void {
     const CLEAN_UP_ONLY_ON_UNMOUNT: [] = [];
 
     useEffect(effect, CLEAN_UP_ONLY_ON_UNMOUNT);
+}
+
+function last5Events(durationRef: React.RefObject<HTMLDivElement>) {
+    return () => {
+        const w = window as any;
+        if (durationRef.current) {
+            const events = [...w.keyEvents]
+                .reverse()
+                .slice(0, 5)
+                .map((e: any) => {
+                    return `${e.event} ${e.duration.toFixed(2)}ms`;
+                })
+                .join("<br />");
+            durationRef.current.innerHTML = events;
+        }
+    };
 }
 
 export default App;
